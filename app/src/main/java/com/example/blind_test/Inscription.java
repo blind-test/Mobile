@@ -35,7 +35,6 @@ public class Inscription extends AppCompatActivity {
     private Button buttonVali;
 
     private Api mAPIService;
-    private TextView mResponseTv;
 
     private static final String TAG = "Inscription";
 
@@ -77,7 +76,6 @@ public class Inscription extends AppCompatActivity {
             public void onResponse(Call<PostAuth> call, Response<PostAuth> response) {
 
                 if(response.isSuccessful()) {
-                    showResponse(response.body().toString());
                     Log.i(TAG, "post submitted to API." + response.body().toString());
                 }
             }
@@ -90,10 +88,4 @@ public class Inscription extends AppCompatActivity {
         });
     }
 
-    public void showResponse(String response) {
-        if(mResponseTv.getVisibility() == View.GONE) {
-            mResponseTv.setVisibility(View.VISIBLE);
-        }
-        mResponseTv.setText(response);
-    }
 }

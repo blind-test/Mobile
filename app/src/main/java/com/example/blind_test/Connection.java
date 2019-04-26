@@ -1,5 +1,6 @@
 package com.example.blind_test;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.blind_test.model.PostAuth;
+import com.example.blind_test.model.PostCo;
 import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
 
@@ -25,7 +26,6 @@ public class Connection extends AppCompatActivity {
     private Button buttonCo;
 
     private Api mAPIService;
-    private TextView mResponseTv;
 
     private static final String TAG = "Connection";
 
@@ -59,28 +59,24 @@ public class Connection extends AppCompatActivity {
     };
 
     private void sendPost(String email, String password) {
-        mAPIService.coPost(email, password).enqueue(new Callback<PostAuth>() {
+        mAPIService.coPost(email, password).enqueue(new Callback<PostCo>() {
             @Override
-            public void onResponse(Call<PostAuth> call, Response<PostAuth> response) {
-
+            public void onResponse(Call<PostCo> call, Response<PostCo> response) {
+                Log.i(TAG, "REPOOOONSE    " + response);
                 if(response.isSuccessful()) {
-                    showResponse(response.body().toString());
                     Log.i(TAG, "post submitted to API." + response.body().toString());
+                    Intent i = new Intent(Connection.this, Menu.class);
+                    i.putExtra("token", response.body().getToken() );
+                    startActivity(i);
                 }
             }
 
             @Override
-            public void onFailure(Call<PostAuth> call, Throwable t) {
+            public void onFailure(Call<PostCo> call, Throwable t) {
                 System.out.println("call : " + t + "\nt : " + t);
                 Log.e(TAG, "Unable to submit post to API.");
             }
         });
     }
 
-    public void showResponse(String response) {
-        if(mResponseTv.getVisibility() == View.GONE) {
-            mResponseTv.setVisibility(View.VISIBLE);
-        }
-        mResponseTv.setText(response);
-    }
 }

@@ -3,7 +3,7 @@ package com.example.blind_test.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PostAuth {
+public class PostCo {
 
     @SerializedName("email")
     @Expose
@@ -11,12 +11,9 @@ public class PostAuth {
     @SerializedName("password")
     @Expose
     private String password;
-    @SerializedName("password_confirmation")
+    @SerializedName("token")
     @Expose
-    private String passwordConfirmation;
-    @SerializedName("nickname")
-    @Expose
-    private String nickname;
+    private String token;
 
     public String getEmail() {
         return email;
@@ -34,29 +31,21 @@ public class PostAuth {
         this.password = password;
     }
 
-    public String getPasswordConfirmation() {
-        return passwordConfirmation;
+    public String getToken() {
+        return token;
     }
 
-    public void setPasswordConfirmation(String passwordConfirmation) {
-        this.passwordConfirmation = passwordConfirmation;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 
     @Override
     public String toString() {
         return "Post{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", passwordConfirmation=" + passwordConfirmation +
-                ", nickname=" + nickname +
+                ", token='" + token + '\'' +
                 '}';
     }
 

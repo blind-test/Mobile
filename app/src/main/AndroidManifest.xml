@@ -25,6 +25,10 @@
         <activity android:name=".Connection">
 
         </activity>
+
+        <activity android:name=".Menu">
+
+        </activity>
     </application>
 
 </manifest>
