@@ -73,7 +73,6 @@ public class Connection extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PostCo> call, Throwable t) {
-                System.out.println("call : " + t + "\nt : " + t);
                 Log.e(TAG, "Unable to submit post to API.");
             }
         });

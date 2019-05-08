@@ -14,15 +14,9 @@ import com.example.blind_test.model.PostAuth;
 import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
 
-import java.io.IOException;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class Inscription extends AppCompatActivity {
 
@@ -58,10 +52,15 @@ public class Inscription extends AppCompatActivity {
 
     View.OnClickListener myhandler1 = new View.OnClickListener() {
         public void onClick(View v) {
-            if((editTextPseudo.getText().toString().equals("") || editTextPseudo.getText().toString().equals("Pseudo"))
-                    || editTextPassword1.getText().toString().equals("") ||editTextPassword2.getText().toString().equals("")
-                    || (editTextEmail.getText().toString().equals("")) || editTextEmail.getText().toString().equals("Email")){
+            if(editTextPseudo.getText().toString().equals("")
+                    || editTextPassword1.getText().toString().equals("")
+                    ||editTextPassword2.getText().toString().equals("")
+                    || editTextEmail.getText().toString().equals("")){
                 editTextError.setText("Tous les champs ne sont pas renseignés");
+                editTextError.setVisibility(View.VISIBLE);
+            }
+            else if(!editTextPassword1.getText().toString().equals( editTextPassword2.getText().toString())){
+                editTextError.setText("Les mots de passes sont différents");
                 editTextError.setVisibility(View.VISIBLE);
             }
             else{
@@ -77,12 +76,26 @@ public class Inscription extends AppCompatActivity {
 
                 if(response.isSuccessful()) {
                     Log.i(TAG, "post submitted to API." + response.body().toString());
+                    startActivity(new Intent(Inscription.this, MainActivity.class));
                 }
+                else{
+                    editTextError.setText("Pseudo ou Email déjà utilisé");
+                    editTextError.setVisibility(View.VISIBLE);
+                }
+       /*         else if(!editTextPseudo.getText().toString().equals(response.body().getNickname())){
+                    editTextError.setText("Ce Pseudo est déjà utilisé");
+                    editTextError.setVisibility(View.VISIBLE);
+                }
+                else if(!editTextEmail.getText().toString().equals(response.body().getEmail())){
+                    editTextError.setText("Cette Email est déjà utilisé");
+                    editTextError.setVisibility(View.VISIBLE);
+                }*/
+
+
             }
 
             @Override
             public void onFailure(Call<PostAuth> call, Throwable t) {
-                System.out.println("call : " + t + "\nt : " + t);
                 Log.e(TAG, "Unable to submit post to API.");
             }
         });
