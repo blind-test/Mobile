@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,14 +48,15 @@ public class Connection extends AppCompatActivity {
 
     View.OnClickListener myhandler1 = new View.OnClickListener() {
         public void onClick(View v) {
-            if((editTextPseudo.getText().toString().equals("") || editTextPseudo.getText().toString().equals("Pseudo"))
+         /*   if((editTextPseudo.getText().toString().equals("") || editTextPseudo.getText().toString().equals("Pseudo"))
                     || editTextPassword.getText().toString().equals("")){
                 editTextError.setText("Tous les champs ne sont pas renseignés");
                 editTextError.setVisibility(View.VISIBLE);
             }
-            else{
-                sendPost(editTextPseudo.getText().toString(), editTextPassword.getText().toString());
-            }
+            else{ */
+            startActivity(new Intent(Connection.this, FirstMenu.class));
+                //sendPost(editTextPseudo.getText().toString(), editTextPassword.getText().toString());
+           // }
         }
     };
 
@@ -65,7 +67,7 @@ public class Connection extends AppCompatActivity {
                 Log.i(TAG, "REPOOOONSE    " + response);
                 if(response.isSuccessful()) {
                     Log.i(TAG, "post submitted to API." + response.body().toString());
-                    Intent i = new Intent(Connection.this, Menu.class);
+                    Intent i = new Intent(Connection.this, FirstMenu.class);
                     i.putExtra("token", response.body().getToken() );
                     startActivity(i);
                 }
