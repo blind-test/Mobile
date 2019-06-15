@@ -1,17 +1,23 @@
 package com.example.blind_test;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.blind_test.fragments.Scores;
 import com.example.blind_test.model.PostCo;
 import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
+import com.example.blind_test.fragments.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,19 +36,16 @@ public class FirstMenu extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.bottom_audio:
-
+                    getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.activity_main_frame_layout, new Gamelist()).commit();
                     return true;
                 case R.id.bottom_friends:
-
-                    return true;
-                case R.id.bottom_messages:
-
+                    getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.activity_main_frame_layout, new Friends()).commit();
                     return true;
                 case R.id.bottom_trophy:
-
-                    return true;
-                case R.id.bottom_user:
-                    System.out.println("teeeeeeeeeeeeeest");
+                    getSupportFragmentManager()
+                            .beginTransaction().replace(R.id.activity_main_frame_layout, new Scores()).commit();
                     return true;
             }
             return false;
@@ -59,8 +62,14 @@ public class FirstMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstmenu);
+
      //   Bundle b = getIntent().getExtras();
      //   s = b.getString("token");
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.activity_main_frame_layout, new Gamelist())
+                .commit();
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -90,6 +99,10 @@ public class FirstMenu extends AppCompatActivity {
                     item.setIcon(R.drawable.ic_cercle_online);
                     status = 1;
                 }
+                return true;
+            case R.id.user:
+                getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.activity_main_frame_layout, new User()).commit();
                 return true;
             case R.id.deco:
                 sendPost(s);

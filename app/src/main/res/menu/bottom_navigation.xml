@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/bottom_user"
-        android:icon="@drawable/ic_user"
-        android:title="utilisateur"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/bottom_trophy"
         android:icon="@drawable/ic_trophy"
         android:title="scores"
@@ -20,10 +15,5 @@
         android:id="@+id/bottom_friends"
         android:icon="@drawable/ic_friends"
         android:title="amis"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/bottom_messages"
-        android:icon="@drawable/ic_message"
-        android:title="messages"
         app:showAsAction="ifRoom" />
 </menu>
