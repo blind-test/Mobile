@@ -81,15 +81,6 @@ public class Inscription extends AppCompatActivity {
                     editTextError.setText("Pseudo ou Email déjà utilisé");
                     editTextError.setVisibility(View.VISIBLE);
                 }
-       /*         else if(!editTextPseudo.getText().toString().equals(response.body().getNickname())){
-                    editTextError.setText("Ce Pseudo est déjà utilisé");
-                    editTextError.setVisibility(View.VISIBLE);
-                }
-                else if(!editTextEmail.getText().toString().equals(response.body().getEmail())){
-                    editTextError.setText("Cette Email est déjà utilisé");
-                    editTextError.setVisibility(View.VISIBLE);
-                }*/
-
 
             }
 

@@ -12,15 +12,9 @@
         android:title="deconnexion"
         app:showAsAction="never">
     </item>
-
     <item android:id="@+id/status"
         android:title="alert"
         android:icon="@drawable/ic_cercle_online"
         app:showAsAction="ifRoom">
-    </item>
-    <item android:id="@+id/alert"
-        android:title="alert"
-        android:icon="@drawable/ic_alert_menu"
-        app:showAsAction="ifRoom" >
     </item>
 </menu>

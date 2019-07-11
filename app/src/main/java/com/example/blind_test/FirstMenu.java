@@ -84,8 +84,6 @@ public class FirstMenu extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.alert:
-                return true;
             case R.id.status:
                 if(status == 1){
                     item.setIcon(R.drawable.ic_cercle_occupied);

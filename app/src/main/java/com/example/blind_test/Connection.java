@@ -48,15 +48,15 @@ public class Connection extends AppCompatActivity {
 
     View.OnClickListener myhandler1 = new View.OnClickListener() {
         public void onClick(View v) {
-         /*   if((editTextPseudo.getText().toString().equals("") || editTextPseudo.getText().toString().equals("Pseudo"))
+            if((editTextPseudo.getText().toString().equals("") || editTextPseudo.getText().toString().equals("Pseudo"))
                     || editTextPassword.getText().toString().equals("")){
                 editTextError.setText("Tous les champs ne sont pas renseignés");
                 editTextError.setVisibility(View.VISIBLE);
             }
-            else{ */
+            else{
             startActivity(new Intent(Connection.this, FirstMenu.class));
-                //sendPost(editTextPseudo.getText().toString(), editTextPassword.getText().toString());
-           // }
+                sendPost(editTextPseudo.getText().toString(), editTextPassword.getText().toString());
+            }
         }
     };
 
