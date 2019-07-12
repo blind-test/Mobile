@@ -44,6 +44,7 @@ public class Connection extends AppCompatActivity {
         mAPIService = ApiUtils.getAPIService();
 
         buttonCo.setOnClickListener(myhandler1);
+
     }
 
     View.OnClickListener myhandler1 = new View.OnClickListener() {
@@ -54,7 +55,7 @@ public class Connection extends AppCompatActivity {
                 editTextError.setVisibility(View.VISIBLE);
             }
             else{
-            startActivity(new Intent(Connection.this, FirstMenu.class));
+
                 sendPost(editTextPseudo.getText().toString(), editTextPassword.getText().toString());
             }
         }
@@ -64,12 +65,13 @@ public class Connection extends AppCompatActivity {
         mAPIService.coPost(email, password).enqueue(new Callback<PostCo>() {
             @Override
             public void onResponse(Call<PostCo> call, Response<PostCo> response) {
-                Log.i(TAG, "REPOOOONSE    " + response);
                 if(response.isSuccessful()) {
-                    Log.i(TAG, "post submitted to API." + response.body().toString());
                     Intent i = new Intent(Connection.this, FirstMenu.class);
                     i.putExtra("token", response.body().getToken() );
                     startActivity(i);
+                }
+                else{
+                    editTextError.setVisibility(View.VISIBLE);
                 }
             }
 

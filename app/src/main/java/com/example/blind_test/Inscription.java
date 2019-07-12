@@ -72,7 +72,6 @@ public class Inscription extends AppCompatActivity {
         mAPIService.inscriPost(email, password, password_confirmation, nickname).enqueue(new Callback<PostAuth>() {
             @Override
             public void onResponse(Call<PostAuth> call, Response<PostAuth> response) {
-
                 if(response.isSuccessful()) {
                     Log.i(TAG, "post submitted to API." + response.body().toString());
                     startActivity(new Intent(Inscription.this, MainActivity.class));

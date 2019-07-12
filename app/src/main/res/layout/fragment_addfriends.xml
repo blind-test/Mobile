@@ -35,7 +35,7 @@
         <ListView
             android:id="@+id/listViewFriend"
             android:layout_width="match_parent"
-            android:layout_height="323dp"
+            android:layout_height="260dp"
             android:layout_gravity="center"></ListView>
 
         <Button
@@ -46,6 +46,18 @@
             android:layout_gravity="center"
             android:text="Ajouter"/>
 
+        <TextView
+            android:id="@+id/textViewError"
+            android:layout_width="224dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:width="131.72dp"
+            android:height="48dp"
+            android:text="Aucun utilisateur avec ce nom"
+            android:textColor="#880E4F"
+            android:textSize="15dp"
+            android:typeface="serif" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

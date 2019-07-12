@@ -63,8 +63,8 @@ public class FirstMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_firstmenu);
 
-     //   Bundle b = getIntent().getExtras();
-     //   s = b.getString("token");
+        Bundle b = getIntent().getExtras();
+        s = b.getString("token");
 
         getSupportFragmentManager()
                 .beginTransaction()
