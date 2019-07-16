@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Filtre"
-            android:inputType="textPassword"
             android:typeface="serif"
             android:layout_gravity="center"/>
 

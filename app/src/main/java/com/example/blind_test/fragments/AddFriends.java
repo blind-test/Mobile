@@ -1,6 +1,5 @@
 package com.example.blind_test.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,10 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.blind_test.Inscription;
-import com.example.blind_test.MainActivity;
 import com.example.blind_test.R;
-import com.example.blind_test.model.PostAuth;
 import com.example.blind_test.model.listUsers;
 import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
