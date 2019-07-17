@@ -23,6 +23,7 @@ import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,10 +31,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
@@ -160,23 +159,19 @@ public class Game extends Fragment {
             output("Error : " + t.getMessage());
         }
 
-        private void start() throws JSONException {            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            Map<String, String> params = new HashMap<String, String>();
-            Map<String, String> map = new HashMap<>();
-            map.put("JWT", s);
-            params.put("event", "join");
-            params.put("topic", "chat_room:lobby_1");
-            JSONObject parameter = new JSONObject(params);
-            parameter.put("payload", map);
-            OkHttpClient client = new OkHttpClient();
-            RequestBody body = RequestBody.create(JSON, parameter.toString());
-
+        private void start() throws JSONException {
             Request request = new Request.Builder()
                     .url("ws://blind-test-api.herokuapp.com/chat")
-                    .post(body)
                     .build();
             Message listener = new Message();
             WebSocket ws = client.newWebSocket(request, listener);
+            JSONObject parameter = new JSONObject();
+            Map<String, String> map = new HashMap<>();
+            map.put("JWT", s);
+            parameter.put("event","join");
+            parameter.put("topic","chat_room:lobby_1");
+            parameter.put("payload",map );
+            ws.send(parameter.toString());
             client.dispatcher().executorService().shutdown();
         }
 
