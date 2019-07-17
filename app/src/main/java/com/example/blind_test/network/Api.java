@@ -2,6 +2,7 @@ package com.example.blind_test.network;
 
 import com.example.blind_test.model.PostAuth;
 import com.example.blind_test.model.PostCo;
+import com.example.blind_test.model.Socket;
 import com.example.blind_test.model.listUsers;
 
 import java.util.List;
@@ -29,6 +30,10 @@ public interface Api {
                             @Field("password") String password,
                             @Field("password_confirmation") String password_confirmation,
                             @Field("nickname") String nickname);
+
+    @Headers("source:android")
+    @POST("/lobbies/1/join")
+    Call<Socket> joinPublicGame(@HeaderMap Map<String, String> headers);
 
     @Headers("source:android")
     @POST("/auth/sign_in")
