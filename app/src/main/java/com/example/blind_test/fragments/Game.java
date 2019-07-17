@@ -166,11 +166,12 @@ public class Game extends Fragment {
             Message listener = new Message();
             WebSocket ws = client.newWebSocket(request, listener);
             JSONObject parameter = new JSONObject();
-            Map<String, String> map = new HashMap<>();
-            map.put("JWT", s);
+            JSONObject payload = new JSONObject();
+            payload.put("JWT", s);
             parameter.put("event","join");
             parameter.put("topic","chat_room:lobby_1");
-            parameter.put("payload",map );
+            parameter.put("payload", payload);
+            output(parameter.toString());
             ws.send(parameter.toString());
             client.dispatcher().executorService().shutdown();
         }
