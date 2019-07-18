@@ -116,7 +116,7 @@ public class FirstMenu extends AppCompatActivity {
             @Override
             public void onResponse(Call<PostCo> call, Response<PostCo> response) {
                 if(response.isSuccessful()) {
-                    Log.i(TAG, "post submitted to API." + response.body().toString());
+                    Log.i(TAG, "post submitted to API." );
                     startActivity(new Intent(FirstMenu.this, MainActivity.class));
                 }
             }
