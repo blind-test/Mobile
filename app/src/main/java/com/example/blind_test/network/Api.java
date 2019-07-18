@@ -67,4 +67,11 @@ public interface Api {
     Call<listUsers> responsFriend(@HeaderMap Map<String, String> headers,
                                   @Path("id") String id,
                                   @Query("status") String status);
+
+    @Headers("source:android")
+    @PUT("/users/{id}")
+    Call<listUsers> updateUser(@HeaderMap Map<String, String> headers,
+                                  @Path("id") String id,
+                                  @Query("nickname") String nickname,
+                                  @Query("email") String email);
 }

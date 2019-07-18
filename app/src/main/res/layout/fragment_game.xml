@@ -39,7 +39,7 @@
             android:id="@+id/editMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="443dp"
+            android:layout_marginTop="473dp"
             android:layout_marginRight="70dp"
             android:layout_weight="2"
             android:ems="10"
@@ -53,7 +53,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="443dp"
+            android:layout_marginTop="473dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/ic_send_black_24dp"
             android:text="Envoyer" />

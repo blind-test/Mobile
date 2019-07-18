@@ -22,30 +22,28 @@
             android:layout_gravity="center"/>
 
         <EditText
-            android:id="@+id/textViewPseudo"
+            android:id="@+id/EditTextPseudo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="80dp"
-            android:text="TextView" />
+            android:layout_marginRight="80dp" />
 
         <TextView
-            android:id="@+id/TextViewPass"
+            android:id="@+id/TextViewMail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Mot de passe"
+            android:text="Email"
             android:textAlignment="center"
             android:layout_gravity="center"/>
         <EditText
-            android:id="@+id/textViewPass"
+            android:id="@+id/EditTextMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="80dp"
-            android:text="TextView" />
+            android:layout_marginRight="80dp"/>
 
         <Button
             android:id="@+id/buttonUpdate"
@@ -55,6 +53,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Modifier" />
+
+        <TextView
+            android:id="@+id/textViewError"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:width="131.72dp"
+            android:height="48dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Remplir tous les champs"
+            android:textColor="#880E4F"
+            android:textSize="15dp"
+            android:typeface="serif"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

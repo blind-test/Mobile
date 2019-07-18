@@ -227,6 +227,7 @@ public class Game extends Fragment {
                 public void run() {
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1 , listMessage);
                     output.setAdapter(arrayAdapter);
+                    output.setSelection(arrayAdapter.getCount() - 1);
                 }
             });
         }
