@@ -33,6 +33,10 @@ public interface Api {
 
     @Headers("source:android")
     @POST("/lobbies/1/join")
+    Call<Socket> joinPublicMessage(@HeaderMap Map<String, String> headers);
+
+    @Headers("source:android")
+    @POST("/lobbies/1/game")
     Call<Socket> joinPublicGame(@HeaderMap Map<String, String> headers);
 
     @Headers("source:android")

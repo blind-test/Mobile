@@ -117,6 +117,7 @@ public class AddFriends extends Fragment {
                     else{
                         textViewError.setVisibility(View.VISIBLE);
                     }
+                    response.raw().body().close();
                 }
             }
 

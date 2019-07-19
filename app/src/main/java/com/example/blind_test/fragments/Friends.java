@@ -200,6 +200,7 @@ public class Friends extends Fragment {
                     }
                     else{
                     }
+
                 }
             }
 
@@ -208,5 +209,7 @@ public class Friends extends Fragment {
                 Log.e(TAG, "Unable to submit post to API.");
             }
         });
+
+
     }
 }

@@ -10,10 +10,49 @@ public class Socket {
     @SerializedName("topic")
     @Expose
     private String topic;
+    @SerializedName("running")
+    @Expose
+    private String running;
+    @SerializedName("subject")
+    @Expose
+    private String subject;
+    @SerializedName("payload")
+    @Expose
+    private String payload;
+    @SerializedName("statut")
+    @Expose
+    private String statut;
 
-    public Socket(String event, String topic) {
-        this.event = event;
-        this.topic = topic;
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
+
+    public String getRunning() {
+        return running;
+    }
+
+    public void setRunning(String running) {
+        this.running = running;
     }
 
     public String getEvent() {
@@ -37,6 +76,9 @@ public class Socket {
         return "Socket{" +
                 "event='" + event + '\'' +
                 ", topic='" + topic + '\'' +
+                ", running='" + running + '\'' +
+                ", subject='" + subject + '\'' +
+                ", payload='" + payload + '\'' +
                 '}';
     }
 }

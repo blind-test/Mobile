@@ -29,17 +29,34 @@
             android:layout_height="189dp"
             android:layout_gravity="center" />
 
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:text="Commencer"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="229dp"
+            android:text="Question"/>
+
         <ListView
             android:id="@+id/output"
             android:layout_width="match_parent"
             android:layout_height="254dp"
-            android:layout_marginTop="229dp"></ListView>
+            android:layout_marginTop="269dp" />
 
         <EditText
             android:id="@+id/editMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="473dp"
+            android:layout_marginTop="513dp"
             android:layout_marginRight="70dp"
             android:layout_weight="2"
             android:ems="10"
@@ -53,7 +70,7 @@
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="473dp"
+            android:layout_marginTop="513dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/ic_send_black_24dp"
             android:text="Envoyer" />
