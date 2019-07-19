@@ -114,7 +114,12 @@ public class Game extends Fragment {
 
                 connectionGame(s);
                 try {
-                    m2.start();
+                    if(ws2 == null) {
+                        m2.start();
+                    }
+                    else{
+                        m2.startAgain();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -193,9 +198,6 @@ public class Game extends Fragment {
 
         @Override
         public void onMessage(WebSocket webSocket, String text) {
-            System.out.println("---------------\n");
-            System.out.println(text + " test \n");
-            System.out.println("---------------\n");
             if(!text.equals("ping")) {
                 String message = "";
                 if(text.contains("subject\":\"msg")) {
@@ -247,6 +249,7 @@ public class Game extends Fragment {
                                 buttonStart.setVisibility(View.VISIBLE);
                                 imageGame.setVisibility(View.GONE);
                                 videoGame.setVisibility(View.GONE);
+                                question.setText("");
                             }
                         });
                         listMessage.add("Partie terminé!");
@@ -255,10 +258,6 @@ public class Game extends Fragment {
                 }
                 else if (text.contains("subject\":\"round" )){
                     if(text.contains("subject\":\"round:new")){
-
-                        System.out.println("---------------\n");
-                        System.out.println("new round" +text + "\n");
-                        System.out.println("---------------\n");
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -266,7 +265,7 @@ public class Game extends Fragment {
                             }
                         });
                         //récup question
-                        int pos = text.indexOf("question");
+                        int pos = text.indexOf("question\"");
                         pos +=11;
                         String verif = "";
                         for(int i = pos ; i < text.length() ; i++){
@@ -290,9 +289,6 @@ public class Game extends Fragment {
                             }
                             message = message + text.charAt(i);
                         }
-                        System.out.println("++++++++++++ \n");
-                        System.out.println(message + "\n");
-                        System.out.println("++++++++++++ \n");
                         //guestion du média
                         if(message.equals("picture")){
                             pos = text.indexOf("file_url");
@@ -306,9 +302,6 @@ public class Game extends Fragment {
                                 message = message + text.charAt(i);
                             }
                             final String finalURL = message;
-                            System.out.println("-------------\n");
-                            System.out.println( message+"\n");
-                            System.out.println("-------------\n");
                             sendImage(finalURL);
                         }
                         else if(message.equals("video")){
@@ -345,10 +338,6 @@ public class Game extends Fragment {
                         }
                     }
                     if(text.contains("subject\":\"round:finish")){
-
-                        System.out.println("---------------\n");
-                        System.out.println("round finish" + text + "\n");
-                        System.out.println("---------------\n");
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -357,19 +346,18 @@ public class Game extends Fragment {
                                 videoGame.setVisibility(View.GONE);
                             }
                         });
-                        int pos = text.indexOf("question");
-                        pos +=11;
+                        int pos = text.indexOf("answers");
+                        pos +=13;
                         String verif = "";
                         message = "réponse : ";
                         for(int i = pos ; i < text.length() ; i++){
                             verif = String.valueOf(text.charAt(i));
-                            if(verif.equals("\"")) {
+                            if(verif.equals("\\")) {
                                 break;
                             }
                             message = message + text.charAt(i);
                         }
                         listMessage.add(message);
-                        output();
                     }
                 }
             }
@@ -499,127 +487,7 @@ public class Game extends Fragment {
         public void onOpen(WebSocket webSocket, Response response) {
         }
 
-        @Override
-        public void onMessage(WebSocket webSocket, String text) {
-            System.out.println("------------------\n");
-            System.out.println(text+" partie Media\n");
-            System.out.println("------------------\n");
-            if(!text.equals("ping")) {
-                String message = "";
-                if(text.contains("subject\":\"game:new")){
-                    buttonStart.setVisibility(View.GONE);
-                }
-                if(text.contains("subject\":\"round:new")){
-                    buttonStart.setVisibility(View.GONE);
-                    //récup question
-                    int pos = text.indexOf("question");
-                    pos +=11;
-                    String verif = "";
-                    for(int i = pos ; i < text.length() ; i++){
-                        verif = String.valueOf(text.charAt(i));
-                        if(verif.equals("\"")) {
-                            break;
-                        }
-                        message = message + text.charAt(i);
-                    }
-                    question.setVisibility(View.VISIBLE);
-                    question.setText(message);
-                    //récup type média
-                    pos = text.indexOf("kind");
-                    pos +=11;
-                    message = "";
-                    for(int i = pos ; i < text.length() ; i++){
-                        verif = String.valueOf(text.charAt(i));
-                        if(verif.equals("\"")) {
-                            break;
-                        }
-                        message = message + text.charAt(i);
-                        message.replaceAll("https://","http://");
-                        Picasso.get().load(message).into(imageGame);
-                    }
-                    //guestion du média
-                    if(message.equals("picture")){
-                        pos = text.indexOf("file_url");
-                        pos +=11;
-                        message = "";
-                        for(int i = pos ; i < text.length() ; i++){
-                            verif = String.valueOf(text.charAt(i));
-                            if(verif.equals("\"")) {
-                                break;
-                            }
-                            message = message + text.charAt(i);
-                        }
-                        videoGame.setVisibility(View.GONE);
-                        imageGame.setVisibility(View.VISIBLE);
-                    }
-                    else if(message.equals("video")){
-                        pos = text.indexOf("file_url");
-                        pos +=11;
-                        message = "";
-                        for(int i = pos ; i < text.length() ; i++){
-                            verif = String.valueOf(text.charAt(i));
-                            if(verif.equals("\"")) {
-                                break;
-                            }
-                            message = message + text.charAt(i);
-                        }
-                        videoGame.setVisibility(View.VISIBLE);
-                        imageGame.setVisibility(View.GONE);
-                        Uri uri = Uri.parse(message);
-                        videoGame.setVideoURI(uri);
-                        videoGame.requestFocus();
-                        videoGame.start();
-                    }
-                    else if(message.equals("music")){
-                        pos = text.indexOf("file_url");
-                        pos +=11;
-                        message = "";
-                        for(int i = pos ; i < text.length() ; i++){
-                            verif = String.valueOf(text.charAt(i));
-                            if(verif.equals("\"")) {
-                                break;
-                            }
-                            message = message + text.charAt(i);
-                        }
-                        videoGame.setVisibility(View.GONE);
-                        imageGame.setVisibility(View.GONE);
-                        try {
-                            MediaPlayer mp = new MediaPlayer();
-                            mp.setDataSource(message);
-                            mp.prepare();
-                            mp.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                if(text.contains("subject\":\"game:finish")){
-                    buttonStart.setVisibility(View.GONE);
-                    imageGame.setVisibility(View.GONE);
-                    videoGame.setVisibility(View.GONE);
-                    listMessage.add("Partie terminé!");
-                    sortie();
-                }
-                if(text.contains("subject\":\"round:finish")){
-                    buttonStart.setVisibility(View.GONE);
-                    imageGame.setVisibility(View.GONE);
-                    videoGame.setVisibility(View.GONE);
-                    int pos = text.indexOf("question");
-                    pos +=11;
-                    String verif = "";
-                    message = "réponse : ";
-                    for(int i = pos ; i < text.length() ; i++){
-                        verif = String.valueOf(text.charAt(i));
-                        if(verif.equals("\"")) {
-                            break;
-                        }
-                        message = message + text.charAt(i);
-                    }
-                    listMessage.add(message);
-                    sortie();
-                }
-            }
-        }
+
 
         @Override
         public void onMessage(WebSocket webSocket, ByteString bytes) {
@@ -646,23 +514,19 @@ public class Game extends Fragment {
             JSONObject parameter = new JSONObject();
             parameter.put("event","join");
             parameter.put("topic","game_room:lobby_1");
-            sortie();
             ws2.send(parameter.toString());
             client2.dispatcher().executorService().shutdown();
         }
 
-        private void sortie() {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("------------------\n");
-                    System.out.println("sortie \n");
-                    System.out.println("--------------\n");
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1 , listMessage);
-                    output.setAdapter(arrayAdapter);
-                    output.setSelection(arrayAdapter.getCount() - 1);
-                }
-            });
+        private void startAgain() throws JSONException {
+            Request request = new Request.Builder()
+                    .url("ws://blind-test-api.herokuapp.com/game")
+                    .build();
+            JSONObject parameter = new JSONObject();
+            parameter.put("event","join");
+            parameter.put("topic","game_room:lobby_1");
+            ws2.send(parameter.toString());
         }
+
     }
 }
