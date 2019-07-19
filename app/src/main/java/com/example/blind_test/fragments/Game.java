@@ -193,7 +193,6 @@ public class Game extends Fragment {
 
         @Override
         public void onMessage(WebSocket webSocket, String text) {
-
             System.out.println("---------------\n");
             System.out.println(text + " test \n");
             System.out.println("---------------\n");
@@ -258,7 +257,7 @@ public class Game extends Fragment {
                     if(text.contains("subject\":\"round:new")){
 
                         System.out.println("---------------\n");
-                        System.out.println("new round\n");
+                        System.out.println("new round" +text + "\n");
                         System.out.println("---------------\n");
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -277,13 +276,12 @@ public class Game extends Fragment {
                             }
                             message = message + text.charAt(i);
                         }
-                        question.setVisibility(View.VISIBLE);
-                        question.setText(message);
-
+                        final String question = message;
+                        sendQuestion(question);
 
                         //récup type média
                         pos = text.indexOf("kind");
-                        pos +=11;
+                        pos +=7;
                         message = "";
                         for(int i = pos ; i < text.length() ; i++){
                             verif = String.valueOf(text.charAt(i));
@@ -291,9 +289,10 @@ public class Game extends Fragment {
                                 break;
                             }
                             message = message + text.charAt(i);
-                            message.replaceAll("https://","http://");
-                            Picasso.get().load(message).into(imageGame);
                         }
+                        System.out.println("++++++++++++ \n");
+                        System.out.println(message + "\n");
+                        System.out.println("++++++++++++ \n");
                         //guestion du média
                         if(message.equals("picture")){
                             pos = text.indexOf("file_url");
@@ -306,16 +305,11 @@ public class Game extends Fragment {
                                 }
                                 message = message + text.charAt(i);
                             }
-                            String url = "https://dev-blind-test.s3-eu-west-1.amazonaws.com/picture/2019-06-06-17-51-00-shadow.jpg";
-                            url.replaceAll("https://","http://");
-                            Picasso.get().load(url).into(imageGame);
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    videoGame.setVisibility(View.GONE);
-                                    imageGame.setVisibility(View.VISIBLE);
-                                }
-                            });
+                            final String finalURL = message;
+                            System.out.println("-------------\n");
+                            System.out.println( message+"\n");
+                            System.out.println("-------------\n");
+                            sendImage(finalURL);
                         }
                         else if(message.equals("video")){
                             pos = text.indexOf("file_url");
@@ -328,17 +322,11 @@ public class Game extends Fragment {
                                 }
                                 message = message + text.charAt(i);
                             }
-                            Uri uri = Uri.parse(message);
-                            videoGame.setVideoURI(uri);
-                            videoGame.requestFocus();
-                            videoGame.start();
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    videoGame.setVisibility(View.VISIBLE);
-                                    imageGame.setVisibility(View.GONE);
-                                }
-                            });
+                            System.out.println("-------------\n");
+                            System.out.println(message+"\n");
+                            System.out.println("-------------\n");
+                            final String finalMessage = message;
+                            sendVideo(finalMessage);
                         }
                         else if(message.equals("music")){
                             pos = text.indexOf("file_url");
@@ -351,28 +339,15 @@ public class Game extends Fragment {
                                 }
                                 message = message + text.charAt(i);
                             }
+                            final String FinalMessage = message;
+                            sendMusic(FinalMessage);
 
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    videoGame.setVisibility(View.GONE);
-                                    imageGame.setVisibility(View.GONE);
-                                }
-                            });
-                            try {
-                                MediaPlayer mp = new MediaPlayer();
-                                mp.setDataSource(message);
-                                mp.prepare();
-                                mp.start();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
                         }
                     }
                     if(text.contains("subject\":\"round:finish")){
 
                         System.out.println("---------------\n");
-                        System.out.println("new round finish\n");
+                        System.out.println("round finish" + text + "\n");
                         System.out.println("---------------\n");
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -456,6 +431,64 @@ public class Game extends Fragment {
                 }
             });
         }
+
+        private void sendImage(final String url) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    url.replaceAll("https://","http://");
+                    Picasso.get().load(url).into(imageGame);
+
+                    videoGame.setVisibility(View.GONE);
+                    imageGame.setVisibility(View.VISIBLE);
+                }
+            });
+        }
+
+        private void sendVideo(final String url) {
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Uri uri = Uri.parse(url);
+                    videoGame.setVideoURI(uri);
+                    videoGame.requestFocus();
+                    videoGame.start();
+                    videoGame.setVisibility(View.VISIBLE);
+                    imageGame.setVisibility(View.GONE);
+                }
+            });
+        }
+
+
+        private void sendMusic(final String url) {
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        MediaPlayer mp = new MediaPlayer();
+                        mp.setDataSource(url);
+                        mp.prepare();
+                        mp.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+        private void sendQuestion(final String url) {
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    question.setVisibility(View.VISIBLE);
+                    question.setText(url);
+                }
+            });
+        }
+
     }
 
     public class Medias extends WebSocketListener {
