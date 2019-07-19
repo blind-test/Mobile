@@ -4,29 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_color"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/buttonInscription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:width="131.72dp"
+        android:height="48dp"
+        android:background="#EEEEEE"
         android:text="Inscription"
+        android:typeface="serif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/buttonConnection"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/buttonConnection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:width="131.72dp"
+        android:height="48dp"
+        android:background="#EEEEEE"
         android:text="Connexion"
-        app:layout_constraintBottom_toTopOf="@+id/buttonInscription"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:typeface="serif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonInscription"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="93dp"
+        android:text="Blind Test"
+        android:textSize="70dp"
+        android:typeface="serif"
+        app:layout_constraintBottom_toTopOf="@+id/buttonConnection"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
