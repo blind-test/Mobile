@@ -1,5 +1,6 @@
 package com.example.blind_test.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.blind_test.FirstMenu;
+import com.example.blind_test.MainActivity;
 import com.example.blind_test.R;
 import com.example.blind_test.model.Lobbies;
 import com.example.blind_test.model.listUsers;
@@ -37,11 +40,12 @@ public class Scores extends Fragment {
     Button buttonDetail;
     ListView listViewScores;
 
+    Bundle b ;
     ArrayList<String> ar = new ArrayList<String>();
     ArrayList<Integer> ar2 = new ArrayList<Integer>();
     private String s;
     private Api mAPIService;
-    private int id;
+    private String idGame;
 
     @Nullable
     @Override
@@ -55,7 +59,8 @@ public class Scores extends Fragment {
         title = (TextView) view.findViewById(R.id.title);
         buttonDetail = (Button) view.findViewById(R.id.buttonDetail);
         listViewScores = (ListView) view.findViewById(R.id.listViewScores);
-        Bundle b = getActivity().getIntent().getExtras();
+        b = getActivity().getIntent().getExtras();
+        buttonDetail.setVisibility(View.GONE);
         s = b.getString("token");
 
         mAPIService = ApiUtils.getAPIService();
@@ -65,14 +70,17 @@ public class Scores extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 buttonDetail.setVisibility(View.VISIBLE);
+                buttonDetail.setVisibility(View.VISIBLE);
                 System.out.println(ar2.get(position));
-                id = (ar2.get(position));
+                idGame = (ar2.get(position).toString());
+
             }
         });
 
         buttonDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getActivity().getIntent().putExtra("id",idGame);
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.commit();
                 fr.replace(R.id.activity_main_frame_layout, new ScoreDetail());

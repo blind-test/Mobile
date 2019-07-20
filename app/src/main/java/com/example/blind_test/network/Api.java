@@ -72,6 +72,11 @@ public interface Api {
                                       @Query("status") String status);
 
     @Headers("source:android")
+    @GET("/lobbies/{id}/scores")
+    Call<List<listUsers>> listScoreGeneral(@HeaderMap Map<String, String> headers,
+                                         @Path("id") String id);
+
+    @Headers("source:android")
     @PUT("/friendships/{id}")
     Call<listUsers> responsFriend(@HeaderMap Map<String, String> headers,
                                   @Path("id") String id,

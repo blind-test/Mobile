@@ -68,6 +68,7 @@ public class Connection extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     Intent i = new Intent(Connection.this, FirstMenu.class);
                     i.putExtra("token", response.body().getToken() );
+                    i.putExtra("id","");
                     i.putExtra("current_user_id", response.body().getUser_id() );
                     startActivity(i);
                 }
