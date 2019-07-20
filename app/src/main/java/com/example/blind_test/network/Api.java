@@ -1,5 +1,6 @@
 package com.example.blind_test.network;
 
+import com.example.blind_test.model.Lobbies;
 import com.example.blind_test.model.PostAuth;
 import com.example.blind_test.model.PostCo;
 import com.example.blind_test.model.Socket;
@@ -54,6 +55,10 @@ public interface Api {
     @GET("/users")
     Call<List<listUsers>> listUserGET(@HeaderMap Map<String, String> headers,
                                       @Query("q") String nickname);
+
+    @Headers("source:android")
+    @GET("/lobbies")
+    Call<List<Lobbies>> listLobbies(@HeaderMap Map<String, String> headers);
 
     @Headers("source:android")
     @POST("/friendships")

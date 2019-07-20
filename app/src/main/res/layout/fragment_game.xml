@@ -36,16 +36,24 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:text="Commencer"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
             />
         <TextView
             android:id="@+id/question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_marginRight="60dp"
             android:layout_marginTop="229dp"
             android:text="Question"/>
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="229dp"
+            android:text="timer"/>
 
         <ListView
             android:id="@+id/output"

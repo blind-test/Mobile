@@ -19,15 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="186dp"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"></ListView>
+            android:layout_marginTop="2dp"></ListView>
 
         <Button
-            android:id="@+id/buttonDetail"
+            android:id="@+id/buttonSwap"
             android:layout_marginTop="10dp"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="détail"/>
+            android:text="Journée"/>
 
     </LinearLayout>
 

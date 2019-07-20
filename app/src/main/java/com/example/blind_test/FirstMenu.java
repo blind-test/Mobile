@@ -29,6 +29,7 @@ import retrofit2.Response;
 public class FirstMenu extends AppCompatActivity {
 
     private Api mAPIService;
+    private Integer idScore;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

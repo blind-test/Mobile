@@ -59,6 +59,7 @@ public class Game extends Fragment {
     ListView output;
     EditText editMessage;
     TextView question;
+    TextView timer;
     private Api mAPIService;
     private OkHttpClient client;
     private OkHttpClient client2;
@@ -80,6 +81,7 @@ public class Game extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         title = (TextView) view.findViewById(R.id.title);
+        timer = (TextView) view.findViewById(R.id.timer);
         question = (TextView) view.findViewById(R.id.question);
         videoGame = (VideoView) view.findViewById(R.id.videoGame);
         imageGame = (ImageView) view.findViewById(R.id.imageGame);
@@ -97,6 +99,7 @@ public class Game extends Fragment {
         imageGame.setVisibility(View.GONE);
         buttonStart.setVisibility(View.GONE);
         question.setVisibility(View.GONE);
+        timer.setVisibility(View.GONE);
 
         connectionMessage(s);
 
@@ -200,6 +203,10 @@ public class Game extends Fragment {
         public void onMessage(WebSocket webSocket, String text) {
             if(!text.equals("ping")) {
                 String message = "";
+
+                System.out.println("------\n");
+                System.out.println(text+"\n");
+                System.out.println("------\n");
                 if(text.contains("subject\":\"msg")) {
 
                     int pos = text.indexOf("nickname");
@@ -227,10 +234,6 @@ public class Game extends Fragment {
                 }
                 else if(text.contains("subject\":\"game" )){
                     if(text.contains("subject\":\"game:new")){
-
-                        System.out.println("---------------\n");
-                        System.out.println("new game\n");
-                        System.out.println("---------------\n");
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -239,10 +242,6 @@ public class Game extends Fragment {
                         });
                     }
                     if(text.contains("subject\":\"game:finish")){
-
-                        System.out.println("---------------\n");
-                        System.out.println("new game finish\n");
-                        System.out.println("---------------\n");
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -360,6 +359,20 @@ public class Game extends Fragment {
                         listMessage.add(message);
                     }
                 }
+                else if(text.contains("timer:decrement" )){
+                    int pos = text.indexOf("time\"");
+                    pos +=6;
+                    String verif = "";
+                    for(int i = pos ; i < text.length() ; i++){
+                        verif = String.valueOf(text.charAt(i));
+                        if(verif.equals("}")) {
+                            break;
+                        }
+                        message = message + text.charAt(i);
+                    }
+                    final String urlFinal = message;
+                    sendTimer(urlFinal);
+                }
             }
         }
 
@@ -473,6 +486,17 @@ public class Game extends Fragment {
                 public void run() {
                     question.setVisibility(View.VISIBLE);
                     question.setText(url);
+                }
+            });
+        }
+
+        private void sendTimer(final String url) {
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    timer.setVisibility(View.VISIBLE);
+                    timer.setText(url);
                 }
             });
         }
