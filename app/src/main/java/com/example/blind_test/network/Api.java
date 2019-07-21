@@ -1,8 +1,10 @@
 package com.example.blind_test.network;
 
+import com.example.blind_test.fragments.User;
 import com.example.blind_test.model.Lobbies;
 import com.example.blind_test.model.PostAuth;
 import com.example.blind_test.model.PostCo;
+import com.example.blind_test.model.Score;
 import com.example.blind_test.model.Socket;
 import com.example.blind_test.model.listUsers;
 
@@ -73,8 +75,13 @@ public interface Api {
 
     @Headers("source:android")
     @GET("/lobbies/{id}/scores")
-    Call<List<listUsers>> listScoreGeneral(@HeaderMap Map<String, String> headers,
-                                         @Path("id") String id);
+    Call<List<Score>> listScoreGeneral(@HeaderMap Map<String, String> headers,
+                                       @Path("id") String id);
+
+    @Headers("source:android")
+    @GET("/lobbies/{id}/scores?daily=true")
+    Call<List<Score>> listScoreGeneralDay(@HeaderMap Map<String, String> headers,
+                                       @Path("id") String id);
 
     @Headers("source:android")
     @PUT("/friendships/{id}")
@@ -88,4 +95,9 @@ public interface Api {
                                   @Path("id") String id,
                                   @Query("nickname") String nickname,
                                   @Query("email") String email);
+
+    @Headers("source:android")
+    @GET("/users/{id}")
+    Call<listUsers> GetUser(@HeaderMap Map<String, String> headers,
+                       @Path("id") String id);
 }

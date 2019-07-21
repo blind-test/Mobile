@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.blind_test.R;
+import com.example.blind_test.model.Score;
 import com.example.blind_test.model.listUsers;
 import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
@@ -36,10 +37,11 @@ public class ScoreDetail extends Fragment {
     Button buttonSwap;
     ListView listViewScores;
 
-    ArrayList<String> ar = new ArrayList<String>();
+    ArrayList<String> arrMessage = new ArrayList<String>();
     private Api mAPIService;
     private String s;
     private String idGame;
+    private String idUser;
 
     @Nullable
     @Override
@@ -59,6 +61,7 @@ public class ScoreDetail extends Fragment {
         Bundle b = getActivity().getIntent().getExtras();
         s = b.getString("token");
         idGame = b.getString("id");
+        idUser = b.getString("current_user_id");
 
         title.setText("Détail score");
         getGeneral(s, idGame);
@@ -68,9 +71,11 @@ public class ScoreDetail extends Fragment {
             public void onClick(View v) {
                 if(buttonSwap.getText().equals("Journée")){
                     buttonSwap.setText("Général");
+                    getGeneralD(s, idGame);
                 }
                 else{
                     buttonSwap.setText("Journée");
+                    getGeneral(s, idGame);
                 }
             }
         });
@@ -79,20 +84,29 @@ public class ScoreDetail extends Fragment {
     private void getGeneral(String token, String id) {
         Map<String, String> map = new HashMap<>();
         map.put("JWT", token);
-        mAPIService.listScoreGeneral(map, id).enqueue(new Callback<List<listUsers>>() {
+        mAPIService.listScoreGeneral(map, id).enqueue(new Callback<List<Score>>() {
             @Override
-            public void onResponse(Call<List<listUsers>> call, Response<List<listUsers>> response) {
+            public void onResponse(Call<List<Score>> call, Response<List<Score>> response) {
                 if (response.isSuccessful()) {
                     Log.i(TAG, "post submitted to API." + response.body().toString());
-                    List<listUsers> liste = response.body();
+                    List<Score> liste = response.body();
                     if (!liste.isEmpty()) {
-                        for (listUsers listUsers : liste) {
-                            if (!listUsers.getNicknameFinal().isEmpty()) {
-                                ar.add(listUsers.getNicknameFinal());
+                        arrMessage.clear();
+                        int i = 0;
+                        for (Score score : liste) {
+                            if(i == 0){
+                                arrMessage.add("1er - "+score.getNickname()+" - "+score.getScore()+"points");
                             }
+                            if(i!=0 && i < 5){
+                                arrMessage.add((i+1)+"eme - "+score.getNickname()+" - "+score.getScore()+"points");
+                            }
+                            if(score.getId().equals(idUser) && i >= 5){
+                                arrMessage.add((i+1)+"eme - "+score.getNickname()+" - "+score.getScore()+"points");
+                            }
+                            i++;
                         }
                         listViewScores.setAdapter(null);
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, ar);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrMessage);
                         listViewScores.setAdapter(arrayAdapter);
                     } else {
                     }
@@ -101,7 +115,48 @@ public class ScoreDetail extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<listUsers>> call, Throwable t) {
+            public void onFailure(Call<List<Score>> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API.");
+            }
+        });
+    }
+
+
+    private void getGeneralD(String token, String id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("JWT", token);
+        mAPIService.listScoreGeneralDay(map, id).enqueue(new Callback<List<Score>>() {
+            @Override
+            public void onResponse(Call<List<Score>> call, Response<List<Score>> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "post submitted to API." + response.body().toString());
+                    List<Score> liste = response.body();
+                    if (!liste.isEmpty()) {
+                        arrMessage.clear();
+                        int i = 0;
+                        for (Score score : liste) {
+                            if(i == 0){
+                                arrMessage.add("1er - "+score.getNickname()+" - "+score.getScore()+"points");
+                            }
+                            if(i!=0 && i < 5){
+                                arrMessage.add((i+1)+"eme - "+score.getNickname()+" - "+score.getScore()+"points");
+                            }
+                            if(score.getId().equals(idUser)){
+                                arrMessage.add((i+1)+"eme - "+score.getNickname()+" - "+score.getScore()+"points");
+                            }
+                            i++;
+                        }
+                        listViewScores.setAdapter(null);
+                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, arrMessage);
+                        listViewScores.setAdapter(arrayAdapter);
+                    } else {
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Score>> call, Throwable t) {
                 Log.e(TAG, "Unable to submit post to API.");
             }
         });

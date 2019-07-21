@@ -62,11 +62,9 @@ public class User extends Fragment {
         s = b.getString("token");
         id = b.getString("current_user_id");
 
-        System.out.println("-----------------\n");
-        System.out.println(id + "\n");
-        System.out.println("-----------------\n");
-        mAPIService = ApiUtils.getAPIService();
 
+        mAPIService = ApiUtils.getAPIService();
+        sendRequestUser(id,s);
         title.setText("gestion de compte");
 
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +77,27 @@ public class User extends Fragment {
                 else{
                     textViewError.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+    }
+
+    private void sendRequestUser(String id, String token) {
+        Map<String, String> map = new HashMap<>();
+        map.put("JWT", token);
+        mAPIService.GetUser(map, id).enqueue(new Callback<listUsers>() {
+            @Override
+            public void onResponse(Call<listUsers> call, Response<listUsers> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "post submitted to API." + response.body().toString());
+                    listUsers user = response.body();
+                    EditTextPseudo.setText(user.getNicknameFinal());
+                    EditTextMail.setText(user.getEmail());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<listUsers> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API.");
             }
         });
     }
