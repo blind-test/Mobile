@@ -71,7 +71,14 @@
                 android:text="Refuser"
                 android:layout_marginLeft="80dp"
                 android:layout_alignParentLeft="true"/>
+
         </RelativeLayout>
+        <TextView
+        android:id="@+id/sendBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+            android:text="Demande en attente"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

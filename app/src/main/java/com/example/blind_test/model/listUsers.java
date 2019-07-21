@@ -45,6 +45,26 @@ public class listUsers {
     @Expose
     private int friendship_id;
 
+    @SerializedName("asked_by")
+    @Expose
+    private int asked_by;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public int getAsked_by() {
+        return asked_by;
+    }
+
+    public void setAsked_by(int asked_by) {
+        this.asked_by = asked_by;
+    }
+
     public int getId() {
         return id;
     }
@@ -150,6 +170,7 @@ public class listUsers {
                 ", rank='" + rank + '\'' +
                 ", created_at='" + created_at + '\'' +
                 ", updated_at='" + updated_at + '\'' +
+                ", asked_by='" + asked_by + '\'' +
                 '}';
     }
 }

@@ -35,6 +35,7 @@ public class Friends extends Fragment {
     TextView title;
     TextView titleAttente;
     TextView titleFriends;
+    TextView sendBy;
     Button buttonAddFriends;
     Button buttonAcceptFriend;
     Button buttonRefuseFriend;
@@ -42,11 +43,12 @@ public class Friends extends Fragment {
     ListView listViewFriends;
 
     private Api mAPIService;
-    private int id;
+    private String idUser;
     private int idAdd;
     ArrayList<String> ar = new ArrayList<String>();
     ArrayList<String> ar2 = new ArrayList<String>();
     ArrayList<Integer> arId = new ArrayList<Integer>();
+    ArrayList<Integer> verif = new ArrayList<Integer>();
     private String s;
 
     @Nullable
@@ -59,6 +61,7 @@ public class Friends extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         title = (TextView) view.findViewById(R.id.title);
+        sendBy = (TextView) view.findViewById(R.id.sendBy);
         titleAttente = (TextView) view.findViewById(R.id.titleAttente);
         titleFriends = (TextView) view.findViewById(R.id.titleFriends);
         buttonAddFriends = (Button) view.findViewById(R.id.buttonAddFriends);
@@ -69,8 +72,10 @@ public class Friends extends Fragment {
 
         Bundle b = getActivity().getIntent().getExtras();
         s = b.getString("token");
-        mAPIService = ApiUtils.getAPIService();
+        idUser = b.getString("current_user_id");
 
+        mAPIService = ApiUtils.getAPIService();
+        sendBy.setVisibility(View.GONE);
 
         titleAttente.setText("demande d'ami en attente");
         titleFriends.setText("liste d'ami");
@@ -94,9 +99,19 @@ public class Friends extends Fragment {
         listViewAttente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                buttonAcceptFriend.setVisibility(View.VISIBLE);
-                buttonRefuseFriend.setVisibility(View.VISIBLE);
-                idAdd = (arId.get(position));
+                if(!verif.get(position).equals(idUser)){
+                    sendBy.setVisibility(View.VISIBLE);
+                    buttonAcceptFriend.setVisibility(View.GONE);
+                    buttonRefuseFriend.setVisibility(View.GONE);
+                    idAdd = (arId.get(position));
+                }
+                else{
+                    sendBy.setVisibility(View.GONE);
+                    buttonAcceptFriend.setVisibility(View.VISIBLE);
+                    buttonRefuseFriend.setVisibility(View.VISIBLE);
+                    idAdd = (arId.get(position));
+                }
+
             }
         });
 
@@ -159,6 +174,7 @@ public class Friends extends Fragment {
                             if(!listUsers.getNicknameFinal().isEmpty()) {
                                 ar.add(listUsers.getNicknameFinal());
                                 arId.add(listUsers.getFriendship_id());
+                                verif.add(listUsers.getAsked_by());
                             }
                         }
                         listViewAttente.setAdapter(null);
