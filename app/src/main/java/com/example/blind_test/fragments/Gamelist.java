@@ -19,7 +19,6 @@ import com.example.blind_test.model.Lobbies;
 import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,6 @@ public class Gamelist extends Fragment {
     private Api mAPIService;
     private ListView listViewLobbies;
     private int lobbyId;
-    ArrayList<Integer> lobbiesId = new ArrayList<Integer>();
     List<Lobbies> lobbies;
 
     @Nullable
@@ -51,7 +49,8 @@ public class Gamelist extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.activity_main_frame_layout, new Game());
+                Game gameFragment = Game.newInstance(lobbyId);
+                fr.replace(R.id.activity_main_frame_layout, gameFragment);
                 fr.commit();
             }
         });

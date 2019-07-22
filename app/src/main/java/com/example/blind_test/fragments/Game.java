@@ -1,7 +1,5 @@
 package com.example.blind_test.fragments;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,19 +20,16 @@ import android.widget.VideoView;
 
 import com.example.blind_test.R;
 import com.example.blind_test.model.Socket;
-import com.example.blind_test.model.listUsers;
 import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.OkHttpClient;
@@ -60,6 +55,7 @@ public class Game extends Fragment {
     EditText editMessage;
     TextView question;
     TextView timer;
+    private int lobbyId;
     private Api mAPIService;
     private OkHttpClient client;
     private OkHttpClient client2;
@@ -71,9 +67,25 @@ public class Game extends Fragment {
     public String message = "";
     ArrayList<String> listMessage = new ArrayList<String>();
 
+    public static Game newInstance(int lobbyId) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("lobbyId", lobbyId);
+        Game gameFragment = new Game();
+        gameFragment.setArguments(bundle);
+        return gameFragment;
+    }
+
+    private void readBundle(Bundle bundle) {
+        if (bundle != null) {
+            lobbyId = bundle.getInt("lobbyId");
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        readBundle(getArguments());
+
         return inflater.inflate(R.layout.fragment_game,container,false);
     }
 
@@ -398,7 +410,7 @@ public class Game extends Fragment {
             payload.put("JWT", s);
             payload.put("content",editMessage.getText().toString());
             parameter.put("event","message");
-            parameter.put("topic","chat_room:lobby_1");
+            parameter.put("topic","chat_room:lobby_" + lobbyId);
             parameter.put("payload", payload);
             ws.send(parameter.toString());
             editMessage.getText().clear();
@@ -415,7 +427,7 @@ public class Game extends Fragment {
             JSONObject payload = new JSONObject();
             payload.put("JWT", s);
             parameter.put("event","join");
-            parameter.put("topic","chat_room:lobby_1");
+            parameter.put("topic","chat_room:lobby_" + lobbyId);
             parameter.put("payload", payload);
             output();
             ws.send(parameter.toString());
@@ -537,7 +549,7 @@ public class Game extends Fragment {
             ws2 = client2.newWebSocket(request, listener);
             JSONObject parameter = new JSONObject();
             parameter.put("event","join");
-            parameter.put("topic","game_room:lobby_1");
+            parameter.put("topic","game_room:lobby_" + lobbyId);
             ws2.send(parameter.toString());
             client2.dispatcher().executorService().shutdown();
         }
@@ -548,7 +560,7 @@ public class Game extends Fragment {
                     .build();
             JSONObject parameter = new JSONObject();
             parameter.put("event","join");
-            parameter.put("topic","game_room:lobby_1");
+            parameter.put("topic","game_room:lobby_" + lobbyId);
             ws2.send(parameter.toString());
         }
 
