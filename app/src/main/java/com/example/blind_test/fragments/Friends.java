@@ -99,7 +99,10 @@ public class Friends extends Fragment {
         listViewAttente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(!verif.get(position).equals(idUser)){
+                System.out.println("---------\n");
+                System.out.println(idUser+"       "+position+"      "+verif.get(position)+"\n");
+                System.out.println("---------\n");
+                if(verif.get(position) != Integer.parseInt(idUser)){
                     sendBy.setVisibility(View.VISIBLE);
                     buttonAcceptFriend.setVisibility(View.GONE);
                     buttonRefuseFriend.setVisibility(View.GONE);
