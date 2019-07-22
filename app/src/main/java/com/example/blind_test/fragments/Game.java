@@ -113,7 +113,7 @@ public class Game extends Fragment {
         question.setVisibility(View.GONE);
         timer.setVisibility(View.GONE);
 
-        connectionMessage(s);
+        connectionMessage(s, lobbyId);
 
 
         try {
@@ -127,7 +127,7 @@ public class Game extends Fragment {
             @Override
             public void onClick(View view) {
 
-                connectionGame(s);
+                connectionGame(s, lobbyId);
                 try {
                     if(ws2 == null) {
                         m2.start();
@@ -155,10 +155,10 @@ public class Game extends Fragment {
         title.setText("Partie");
     }
 
-    private void connectionGame(String token) {
+    private void connectionGame(String token, int id) {
         Map<String, String> map = new HashMap<>();
         map.put("JWT", token);
-        mAPIService.joinPublicGame(map).enqueue(new Callback<Socket>() {
+        mAPIService.joinGame(map,Integer.toString(id) ).enqueue(new Callback<Socket>() {
             @Override
             public void onResponse(Call<Socket> call, retrofit2.Response<Socket> response) {
                 if (response.isSuccessful()) {
@@ -173,10 +173,10 @@ public class Game extends Fragment {
         });
     }
 
-    private void connectionMessage(String token) {
+    private void connectionMessage(String token, int id) {
         Map<String, String> map = new HashMap<>();
         map.put("JWT", token);
-        mAPIService.joinPublicMessage(map).enqueue(new Callback<Socket>() {
+        mAPIService.joinMessage(map, Integer.toString(id) ).enqueue(new Callback<Socket>() {
             @Override
             public void onResponse(Call<Socket> call, retrofit2.Response<Socket> response) {
                 if (response.isSuccessful()) {
@@ -185,7 +185,7 @@ public class Game extends Fragment {
                         buttonStart.setVisibility(View.VISIBLE);
                     }
                     else{
-                        connectionGame(s);
+                        connectionGame(s, lobbyId);
                         try {
                             m2.start();
                         } catch (JSONException e) {

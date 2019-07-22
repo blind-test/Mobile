@@ -29,7 +29,7 @@
             android:id="@+id/title2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="Choisir un thème:"
             android:layout_gravity="center"/>
 
@@ -47,7 +47,7 @@
             android:id="@+id/title3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="Durée des manches (entre 25 et 35s)"
             android:layout_gravity="center"/>
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:typeface="serif"
             android:layout_gravity="center"/>
 
@@ -65,7 +65,7 @@
             android:id="@+id/title4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="Nombre de question"
             android:layout_gravity="center"/>
 
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:typeface="serif"
             android:layout_gravity="center"/>
 
@@ -83,7 +83,7 @@
             android:id="@+id/buttonNewGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:ems="10"
             android:hint="Créer"
             android:inputType="textPersonName"
@@ -94,7 +94,7 @@
             android:id="@+id/textViewError"
             android:layout_width="254dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="20dp"
             android:width="131.72dp"
             android:height="48dp"
             android:gravity="center"

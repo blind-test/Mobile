@@ -6,6 +6,7 @@ import com.example.blind_test.model.PostAuth;
 import com.example.blind_test.model.PostCo;
 import com.example.blind_test.model.Score;
 import com.example.blind_test.model.Socket;
+import com.example.blind_test.model.Theme;
 import com.example.blind_test.model.listUsers;
 
 import java.util.List;
@@ -35,12 +36,14 @@ public interface Api {
                             @Field("nickname") String nickname);
 
     @Headers("source:android")
-    @POST("/lobbies/1/join")
-    Call<Socket> joinPublicMessage(@HeaderMap Map<String, String> headers);
+    @POST("/lobbies/{id}/join")
+    Call<Socket> joinMessage(@HeaderMap Map<String, String> headers,
+                                   @Path("id") String id);
 
     @Headers("source:android")
-    @POST("/lobbies/1/game")
-    Call<Socket> joinPublicGame(@HeaderMap Map<String, String> headers);
+    @POST("/lobbies/{id}/game")
+    Call<Socket> joinGame(@HeaderMap Map<String, String> headers,
+                          @Path("id") String id);
 
     @Headers("source:android")
     @POST("/auth/sign_in")
@@ -100,4 +103,16 @@ public interface Api {
     @GET("/users/{id}")
     Call<listUsers> GetUser(@HeaderMap Map<String, String> headers,
                        @Path("id") String id);
+
+    @Headers("source:android")
+    @GET("/themes?public=true")
+    Call<List<Theme>> GetThemes(@HeaderMap Map<String, String> headers);
+
+    @Headers("source:android")
+    @POST("/lobbies")
+    @FormUrlEncoded
+    Call<Lobbies> CreateLobbie(@HeaderMap Map<String, String> headers,
+                              @Field("theme_id") String theme_id,
+                               @Field("questions") String questions,
+                               @Field("restricted") String restricted);
 }
