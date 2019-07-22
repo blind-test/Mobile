@@ -14,17 +14,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
 
-        <EditText
-            android:id="@+id/editTextName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:ems="10"
-            android:hint="Nom de la partie"
-            android:inputType="textPersonName"
-            android:typeface="serif"
-            android:layout_gravity="center"/>
-
         <CheckBox
             android:id="@+id/checkboxNewgame"
             android:layout_width="wrap_content"
@@ -54,13 +43,38 @@
             android:typeface="serif"
             android:layout_gravity="center"/>
 
+        <TextView
+            android:id="@+id/title3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Durée des manches (entre 25 et 35s)"
+            android:layout_gravity="center"/>
+
         <EditText
             android:id="@+id/editTextTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:ems="10"
-            android:hint="Temps des chansons (30s max)"
+            android:inputType="textPersonName"
+            android:typeface="serif"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/title4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Nombre de question"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/editTextQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
             android:inputType="textPersonName"
             android:typeface="serif"
             android:layout_gravity="center"/>
@@ -73,6 +87,20 @@
             android:ems="10"
             android:hint="Créer"
             android:inputType="textPersonName"
+            android:typeface="serif"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/textViewError"
+            android:layout_width="254dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:width="131.72dp"
+            android:height="48dp"
+            android:gravity="center"
+            android:text="Nombre de question trop grand"
+            android:textColor="#880E4F"
+            android:textSize="15dp"
             android:typeface="serif"
             android:layout_gravity="center"/>
 

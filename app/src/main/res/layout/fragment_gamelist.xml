@@ -18,7 +18,7 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="80dp"
+            android:layout_marginRight="40dp"
             android:text="Rejoindre"
             tools:visibility="visible" />
 
@@ -29,9 +29,18 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="center"
-            android:layout_marginLeft="80dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="16dp"
             android:text="Créer" />
+
+        <Button
+            android:id="@+id/buttonPrivateGame"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="Privé" />
 
         <ListView
             android:id="@+id/lobbyList"

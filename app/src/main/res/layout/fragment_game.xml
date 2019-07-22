@@ -59,7 +59,7 @@
             android:id="@+id/output"
             android:layout_width="match_parent"
             android:layout_height="254dp"
-            android:layout_marginTop="269dp" />
+            android:layout_marginTop="259dp" />
 
         <EditText
             android:id="@+id/editMessage"

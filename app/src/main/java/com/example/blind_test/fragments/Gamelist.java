@@ -31,7 +31,7 @@ import static android.support.constraint.Constraints.TAG;
 
 public class Gamelist extends Fragment {
 
-    TextView title;
+    Button buttonPrivateGame;
     private Api mAPIService;
     private ListView listViewLobbies;
     private int lobbyId;
@@ -42,6 +42,7 @@ public class Gamelist extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gamelist,container,false);
         Button button2 = (Button) view.findViewById(R.id.buttonCreateGame);
+        Button buttonPrivateGame = (Button) view.findViewById(R.id.buttonPrivateGame);
         final Button joinButton = (Button) view.findViewById(R.id.joinButton);
         joinButton.setVisibility(View.GONE);
 
@@ -64,6 +65,16 @@ public class Gamelist extends Fragment {
                 fr.commit();
             }
         });
+
+        buttonPrivateGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.activity_main_frame_layout, new Private());
+                fr.commit();
+            }
+        });
+
         listViewLobbies = (ListView) view.findViewById(R.id.lobbyList);
         mAPIService = ApiUtils.getAPIService();
         Bundle b = getActivity().getIntent().getExtras();
