@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_color">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"/>
+            android:text="test"
+            android:layout_marginTop="42dp"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toTopOf="@+id/videoGame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <VideoView
             android:id="@+id/videoGame"
@@ -20,15 +26,22 @@
             android:layout_width="wrap_content"
             android:layout_height="189dp"
             android:layout_centerHorizontal="true"
+            app:layout_constraintEnd_toStartOf="@+id/buttonCreateGame"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
             />
 
         <ImageView
             android:id="@+id/imageGame"
             android:layout_marginTop="40dp"
-            android:layout_width="wrap_content"
             android:layout_height="189dp"
             android:layout_centerHorizontal="true"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            android:layout_width="match_parent" />
 
         <Button
             android:id="@+id/buttonStart"
@@ -38,55 +51,74 @@
             android:text="Commencer"
             android:layout_marginTop="50dp"
             android:layout_centerHorizontal="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
             />
+
         <TextView
             android:id="@+id/question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="228dp"
             android:layout_marginRight="60dp"
-            android:layout_marginTop="229dp"
-            android:text="Question"/>
+            android:text="Question"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <TextView
             android:id="@+id/timer"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="229dp"
-            android:text="timer"/>
+            android:layout_marginTop="228dp"
+            android:text="timer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/question"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <ListView
             android:id="@+id/output"
             android:layout_width="match_parent"
             android:layout_height="254dp"
-            android:layout_marginTop="259dp" />
+            android:layout_marginTop="249dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <EditText
             android:id="@+id/editMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="513dp"
             android:layout_marginRight="70dp"
             android:layout_weight="2"
             android:ems="10"
             android:hint="Ecrire un message"
             android:inputType="text"
             android:paddingHorizontal="10dp"
-            android:text="" />
+            android:text=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/output"/>
 
         <ImageButton
             android:id="@+id/sendMessage"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="513dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/ic_send_black_24dp"
-            android:text="Envoyer" />
+            android:text="Envoyer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/question"
+            app:layout_constraintTop_toBottomOf="@+id/output"/>
 
-
-
-
-    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

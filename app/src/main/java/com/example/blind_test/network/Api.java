@@ -87,6 +87,11 @@ public interface Api {
                                        @Path("id") String id);
 
     @Headers("source:android")
+    @GET("/lobbies/{code}")
+    Call<Lobbies> getLobbiePrivate(@HeaderMap Map<String, String> headers,
+                                          @Path("code") String code);
+
+    @Headers("source:android")
     @PUT("/friendships/{id}")
     Call<listUsers> responsFriend(@HeaderMap Map<String, String> headers,
                                   @Path("id") String id,

@@ -258,6 +258,7 @@ public class Game extends Fragment {
                             @Override
                             public void run() {
                                 buttonStart.setVisibility(View.VISIBLE);
+                                timer.setVisibility(View.GONE);
                                 imageGame.setVisibility(View.GONE);
                                 videoGame.setVisibility(View.GONE);
                                 question.setText("");

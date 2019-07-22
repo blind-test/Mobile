@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_color"
-    tools:context=".Connection">
+    android:background="@drawable/background_color">
 
     <TextView
         android:id="@+id/textView5"
@@ -51,7 +50,6 @@
         android:id="@+id/textViewError"
         android:layout_width="254dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
         android:width="131.72dp"
         android:height="48dp"
         android:gravity="center"
