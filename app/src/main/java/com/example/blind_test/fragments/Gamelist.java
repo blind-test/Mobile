@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,12 +34,27 @@ public class Gamelist extends Fragment {
     TextView title;
     private Api mAPIService;
     private ListView listViewLobbies;
+    private int lobbyId;
+    List<Lobbies> lobbies;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gamelist,container,false);
         Button button2 = (Button) view.findViewById(R.id.buttonCreateGame);
+        final Button joinButton = (Button) view.findViewById(R.id.joinButton);
+        joinButton.setVisibility(View.GONE);
+
+        joinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                Game gameFragment = Game.newInstance(lobbyId);
+                fr.replace(R.id.activity_main_frame_layout, gameFragment);
+                fr.commit();
+            }
+        });
+
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +68,14 @@ public class Gamelist extends Fragment {
         mAPIService = ApiUtils.getAPIService();
         Bundle b = getActivity().getIntent().getExtras();
         listLobbies(b.getString("token"));
+
+        listViewLobbies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                joinButton.setVisibility(View.VISIBLE);
+                lobbyId = Integer.parseInt(lobbies.get(position).getId());
+            }
+        });
 
         return view;
     }
@@ -72,7 +96,7 @@ public class Gamelist extends Fragment {
                 if (response.isSuccessful()) {
                     Log.i(TAG, "GET lobbies " + response.body().toString());
 
-                    List<Lobbies> lobbies = response.body();
+                    lobbies = response.body();
                     if(!lobbies.isEmpty()) {
                         listViewLobbies.setVisibility(View.VISIBLE);
                         listViewLobbies.setAdapter(null);
