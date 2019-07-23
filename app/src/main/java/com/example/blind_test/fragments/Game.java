@@ -60,6 +60,7 @@ public class Game extends Fragment {
     private OkHttpClient client;
     private OkHttpClient client2;
     private String s;
+    private int idQuestion = 0;
     public WebSocket ws;
     public WebSocket ws2;
     public Message m = new Message();
@@ -243,6 +244,35 @@ public class Game extends Fragment {
                     }
                     listMessage.add(message);
                     output();
+
+                    if(!text.contains("score\":\"0")){
+                        pos = text.indexOf("nickname");
+                        pos += 11;
+                        verif = "";
+                        for (int i = pos; i < text.length(); i++) {
+                            verif = String.valueOf(text.charAt(i));
+                            if (verif.equals("\"")) {
+                                break;
+                            }
+                            message = message + text.charAt(i);
+                        }
+                        message = message + " : ";
+
+
+                        pos = text.indexOf("score");
+                        pos += 8;
+                        verif = "";
+                        for (int i = pos; i < text.length(); i++) {
+                            verif = String.valueOf(text.charAt(i));
+                            if (verif.equals("\"")) {
+                                break;
+                            }
+                            message = message + text.charAt(i);
+                        }
+                        message = message + " points";
+                        listMessage.add(message);
+                        output();
+                    }
                 }
                 else if(text.contains("subject\":\"game" )){
                     if(text.contains("subject\":\"game:new")){
@@ -289,6 +319,20 @@ public class Game extends Fragment {
                         }
                         final String question = message;
                         sendQuestion(question);
+
+                        //récup question id
+                        pos = text.indexOf("question_id\"");
+                        pos +=14;
+                        message = "";
+                        verif = "";
+                        for(int i = pos ; i < text.length() ; i++){
+                            verif = String.valueOf(text.charAt(i));
+                            if(verif.equals(",")) {
+                                break;
+                            }
+                            message = message + text.charAt(i);
+                        }
+                        idQuestion = Integer.parseInt(message);
 
                         //récup type média
                         pos = text.indexOf("kind");
@@ -406,11 +450,29 @@ public class Game extends Fragment {
         }
 
         public void sendMessage() throws JSONException {
-            if(!editMessage.getText().toString().equals("")) {
+
+            System.out.println("------\n");
+            System.out.println(idQuestion+"\n");
+            System.out.println("------\n");
+            if(!editMessage.getText().toString().equals("")
+            && idQuestion == 0) {
                 JSONObject parameter = new JSONObject();
                 JSONObject payload = new JSONObject();
                 payload.put("JWT", s);
                 payload.put("content", editMessage.getText().toString());
+                parameter.put("event", "message");
+                parameter.put("topic", "chat_room:lobby_" + lobbyId);
+                parameter.put("payload", payload);
+                ws.send(parameter.toString());
+                editMessage.getText().clear();
+            }
+            if(!editMessage.getText().toString().equals("")
+            && idQuestion != 0){
+                JSONObject parameter = new JSONObject();
+                JSONObject payload = new JSONObject();
+                payload.put("JWT", s);
+                payload.put("content", editMessage.getText().toString());
+                payload.put("question_id ", idQuestion );
                 parameter.put("event", "message");
                 parameter.put("topic", "chat_room:lobby_" + lobbyId);
                 parameter.put("payload", payload);
