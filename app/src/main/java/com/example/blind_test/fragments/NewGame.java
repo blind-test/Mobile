@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.blind_test.R;
 import com.example.blind_test.model.Lobbies;
@@ -22,6 +23,8 @@ import com.example.blind_test.model.Theme;
 import com.example.blind_test.model.listUsers;
 import com.example.blind_test.network.Api;
 import com.example.blind_test.network.ApiUtils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -157,11 +160,32 @@ public class NewGame extends Fragment {
                         fr.commit();
                     }
                 }
-                else{
-                    String rep = response.errorBody().toString();
-                    textViewError.setVisibility(View.VISIBLE);
-                    textViewError.setText(rep);
+                else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        System.out.println("-----\n");
+                        System.out.println(jObjError.toString()+"\n");
+                        System.out.println("-----\n");
+                        int pos = jObjError.toString().indexOf("questions\"");
+                        pos +=12;
+                        String verif = "";
+                        String message ="";
+                        for(int i = pos ; i < jObjError.toString().length() ; i++){
+                            verif = String.valueOf(jObjError.toString().charAt(i));
+                            if(verif.equals("\"")) {
+                                break;
+                            }
+                            message = message + jObjError.toString().charAt(i);
+                        }
+                        final String question = message;
+                        String rep = response.errorBody().toString();
+                        textViewError.setVisibility(View.VISIBLE);
+                        textViewError.setText(message);
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
+
             }
 
             @Override

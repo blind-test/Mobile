@@ -60,6 +60,7 @@ public class Game extends Fragment {
     private OkHttpClient client;
     private OkHttpClient client2;
     private String s;
+    private String Stimer;
     private int idQuestion = 0;
     public WebSocket ws;
     public WebSocket ws2;
@@ -217,11 +218,11 @@ public class Game extends Fragment {
             if(!text.equals("ping")) {
                 String message = "";
 
-                System.out.println("------\n");
-                System.out.println(text+"\n");
-                System.out.println("------\n");
-                if(text.contains("subject\":\"msg")) {
 
+                if(text.contains("subject\":\"msg")) {
+                    System.out.println("///////////\n");
+                    System.out.println(text+"\n");
+                    System.out.println("--/////////----\n");
                     int pos = text.indexOf("nickname");
                     pos += 11;
                     String verif = "";
@@ -245,10 +246,11 @@ public class Game extends Fragment {
                     listMessage.add(message);
                     output();
 
-                    if(!text.contains("score\":\"0")){
+                    if(!text.contains("score\":\"0") && !text.contains("score\":\"\"")){
                         pos = text.indexOf("nickname");
                         pos += 11;
                         verif = "";
+                        message = "";
                         for (int i = pos; i < text.length(); i++) {
                             verif = String.valueOf(text.charAt(i));
                             if (verif.equals("\"")) {
@@ -322,7 +324,7 @@ public class Game extends Fragment {
 
                         //récup question id
                         pos = text.indexOf("question_id\"");
-                        pos +=14;
+                        pos +=13;
                         message = "";
                         verif = "";
                         for(int i = pos ; i < text.length() ; i++){
@@ -427,6 +429,7 @@ public class Game extends Fragment {
                         }
                         message = message + text.charAt(i);
                     }
+                    Stimer = message;
                     final String urlFinal = message;
                     sendTimer(urlFinal);
                 }
@@ -450,10 +453,6 @@ public class Game extends Fragment {
         }
 
         public void sendMessage() throws JSONException {
-
-            System.out.println("------\n");
-            System.out.println(idQuestion+"\n");
-            System.out.println("------\n");
             if(!editMessage.getText().toString().equals("")
             && idQuestion == 0) {
                 JSONObject parameter = new JSONObject();
@@ -472,12 +471,15 @@ public class Game extends Fragment {
                 JSONObject payload = new JSONObject();
                 payload.put("JWT", s);
                 payload.put("content", editMessage.getText().toString());
-                payload.put("question_id ", idQuestion );
+                payload.put("question_id", idQuestion );
                 parameter.put("event", "message");
                 parameter.put("topic", "chat_room:lobby_" + lobbyId);
                 parameter.put("payload", payload);
                 ws.send(parameter.toString());
                 editMessage.getText().clear();
+                System.out.println("++++++\n");
+                System.out.println(parameter.toString()+"\n");
+                System.out.println("++++++\n");
             }
         }
 
