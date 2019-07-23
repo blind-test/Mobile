@@ -103,15 +103,15 @@ public class Friends extends Fragment {
                 System.out.println(idUser+"       "+position+"      "+verif.get(position)+"\n");
                 System.out.println("---------\n");
                 if(verif.get(position) != Integer.parseInt(idUser)){
-                    sendBy.setVisibility(View.VISIBLE);
-                    buttonAcceptFriend.setVisibility(View.GONE);
-                    buttonRefuseFriend.setVisibility(View.GONE);
-                    idAdd = (arId.get(position));
-                }
-                else{
                     sendBy.setVisibility(View.GONE);
                     buttonAcceptFriend.setVisibility(View.VISIBLE);
                     buttonRefuseFriend.setVisibility(View.VISIBLE);
+                    idAdd = (arId.get(position));
+                }
+                else{
+                    sendBy.setVisibility(View.VISIBLE);
+                    buttonAcceptFriend.setVisibility(View.GONE);
+                    buttonRefuseFriend.setVisibility(View.GONE);
                     idAdd = (arId.get(position));
                 }
 
@@ -175,6 +175,7 @@ public class Friends extends Fragment {
                         listViewAttente.setVisibility(View.VISIBLE);
                         for (listUsers listUsers : liste) {
                             if(!listUsers.getNicknameFinal().isEmpty()) {
+
                                 ar.add(listUsers.getNicknameFinal());
                                 arId.add(listUsers.getFriendship_id());
                                 verif.add(listUsers.getAsked_by());
