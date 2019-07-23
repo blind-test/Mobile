@@ -406,15 +406,17 @@ public class Game extends Fragment {
         }
 
         public void sendMessage() throws JSONException {
-            JSONObject parameter = new JSONObject();
-            JSONObject payload = new JSONObject();
-            payload.put("JWT", s);
-            payload.put("content",editMessage.getText().toString());
-            parameter.put("event","message");
-            parameter.put("topic","chat_room:lobby_" + lobbyId);
-            parameter.put("payload", payload);
-            ws.send(parameter.toString());
-            editMessage.getText().clear();
+            if(!editMessage.getText().toString().equals("")) {
+                JSONObject parameter = new JSONObject();
+                JSONObject payload = new JSONObject();
+                payload.put("JWT", s);
+                payload.put("content", editMessage.getText().toString());
+                parameter.put("event", "message");
+                parameter.put("topic", "chat_room:lobby_" + lobbyId);
+                parameter.put("payload", payload);
+                ws.send(parameter.toString());
+                editMessage.getText().clear();
+            }
         }
 
 

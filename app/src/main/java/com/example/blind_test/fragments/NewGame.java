@@ -143,9 +143,24 @@ public class NewGame extends Fragment {
             @Override
             public void onResponse(Call<Lobbies> call, retrofit2.Response<Lobbies> response) {
                 if (response.isSuccessful()) {
+                    Lobbies l = response.body();
                     Log.i(TAG, "post submitted to API." + response.body().toString());
+                    if(l.getRestricted().equals("true")){
+                        buttonNewGame.setVisibility(View.GONE);
+                        textViewError.setVisibility(View.VISIBLE);
+                        textViewError.setText("Votre clé est : " + l.getPrivate_key());
+
+                    }
+                    else {
+                        FragmentTransaction fr = getFragmentManager().beginTransaction();
+                        fr.replace(R.id.activity_main_frame_layout, new Gamelist());
+                        fr.commit();
+                    }
                 }
                 else{
+                    String rep = response.errorBody().toString();
+                    textViewError.setVisibility(View.VISIBLE);
+                    textViewError.setText(rep);
                 }
             }
 

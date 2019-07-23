@@ -45,6 +45,17 @@ public class Lobbies {
     @Expose
     private String theme_description;
 
+    @SerializedName("private_key")
+    @Expose
+    private String private_key;
+
+    public String getPrivate_key() {
+        return private_key;
+    }
+
+    public void setPrivate_key(String private_key) {
+        this.private_key = private_key;
+    }
 
     public String getId() {
         return id;
@@ -139,6 +150,7 @@ public class Lobbies {
                 ", theme_id='" + theme_id + '\'' +
                 ", theme_title='" + theme_title + '\'' +
                 ", theme_description='" + theme_description + '\'' +
+                ", private_key='" + private_key + '\'' +
                 '}';
     }
 }
